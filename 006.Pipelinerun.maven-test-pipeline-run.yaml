@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: maven-springweb-
+  namespace: springweb
+spec:
+  serviceAccountName: tekton-springweb-sa
+  pipelineRef:
+    name: maven-test-pipeline
+  params:
+    - name: buildRevision
+      value: '39483f6e346b8d5e726f8cf563024795402dfc29'
+    - name: appGitUrl
+      value: 'git@github.com:conceptit/springdemo.git'
+    - name: configGitUrl
+      value: 'git@github.com:conceptit/springdemo-config.git'
+    - name: appImage
+      value: 'andrzejpioro/my-hcl-poc'
+  workspaces:
+  - name: app-source
+    emptyDir: {}
+  - name: config-source
+    emptyDir: {}
+  - name: maven-settings
+    emptyDir: {}
+  - name: shared-workspace
+    persistentVolumeClaim:
+      claimName: maven-source-pvc
