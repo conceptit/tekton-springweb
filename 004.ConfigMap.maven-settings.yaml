@@ -2,7 +2,7 @@ apiVersion: v1
 data:
   settings.xml: |
     <settings>
-    <localRepository>/workspace/maven-repo</localRepository>
+    <localRepository>/workspace/source/.m2_local_repo</localRepository>
     <servers>
        <server>
           <id>nexus-releases</id>

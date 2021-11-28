@@ -7,7 +7,6 @@ spec:
   workspaces:
     - name: shared-workspace
     - name: maven-settings-cm
-    - name: maven-repo
   params:
   - name: buildRevision
     description: The revision of the build, i.e. the commit revision of the application repository
@@ -36,7 +35,7 @@ spec:
 
     - name: maven-run
       taskRef:
-        name: maven-ap
+        name: maven
       runAfter:
         - fetch-repository
       params:
@@ -47,12 +46,9 @@ spec:
             - -DskipTests
             - clean
             - package
-        - name: MAVEN_LOCAL_REPO_DIR
-          value: "m2-repository"
+            - install 
       workspaces:
         - name: maven-settings
           workspace: maven-settings-cm
         - name: source
           workspace: shared-workspace
-        - name: maven-repo
-          workspace: maven-repo
