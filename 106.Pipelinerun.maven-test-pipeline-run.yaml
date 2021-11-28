@@ -17,18 +17,12 @@ spec:
     - name: appImage
       value: 'andrzejpioro/my-hcl-poc'
   workspaces:
-  - name: app-source
-    emptyDir: {}
-  - name: config-source
-    emptyDir: {}
-  - name: maven-settings
-    emptyDir: {}
-  - name: shared-workspace
-    persistentVolumeClaim:
-      claimName: maven-source-pvc2
   - name: maven-repo
     persistentVolumeClaim:
       claimName: maven-source-pvc2
-  - name: maven-settings-cm
+  - name: shared-workspace
+    persistentVolumeClaim:
+      claimName: maven-source-pvc2
+  - name: maven-settings
     configMap:
       name: maven-settings-config-map

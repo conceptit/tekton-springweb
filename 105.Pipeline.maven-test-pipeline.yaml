@@ -5,9 +5,9 @@ metadata:
   namespace: springweb
 spec:
   workspaces:
-    - name: shared-workspace
-    - name: maven-settings-cm
     - name: maven-repo
+    - name: maven-settings
+    - name: shared-workspace
   params:
   - name: buildRevision
     description: The revision of the build, i.e. the commit revision of the application repository
@@ -28,31 +28,41 @@ spec:
         - name: url
           value: "$(params.appGitUrl)"
         - name: subdirectory
-          value: "app-source-repo"
+          value: "app-source"
         - name: deleteExisting
           value: "true"
         - name: revision
           value: "$(params.buildRevision)"
-
-    - name: maven-run
-      taskRef:
-        name: maven-ap
+    - name: maven-run-01
       runAfter:
         - fetch-repository
+      taskRef:
+        name: task-01
       params:
-        - name: CONTEXT_DIR
-          value: "app-source-repo"
-        - name: GOALS
-          value:
-            - -DskipTests
-            - clean
-            - package
-        - name: MAVEN_LOCAL_REPO_DIR
-          value: "m2-repository"
+        - name: author
+          value: "James"
+        - name: name
+          value: "1"
       workspaces:
-        - name: maven-settings
-          workspace: maven-settings-cm
-        - name: source
-          workspace: shared-workspace
         - name: maven-repo
           workspace: maven-repo
+        - name: shared
+          workspace: shared-workspace
+    - name: maven-run-02
+      taskRef:
+        name: task-01
+      runAfter:
+        - maven-run-01
+      params:
+        - name: author
+          value: "Batman"
+        - name: name
+          value: "2"
+      workspaces:
+        - name: maven-repo
+          workspace: maven-repo
+        - name: shared
+          workspace: shared-workspace
+        - name: maven-settings
+          workspace: maven-settings
+          

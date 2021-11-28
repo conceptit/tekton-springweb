@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: maven-source-pvc2
+  name: maven-repo-pvc
   namespace: springweb
 spec:
   accessModes:

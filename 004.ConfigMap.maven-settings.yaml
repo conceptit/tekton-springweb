@@ -1,0 +1,23 @@
+apiVersion: v1
+data:
+  settings.xml: |
+    <settings>
+    <localRepository>/workspace/maven-repo</localRepository>
+    <servers>
+       <server>
+          <id>nexus-releases</id>
+          <username>admin</username>
+          <password>P)P)1qaz</password>
+       </server>
+       <server>
+          <id>nexus-snapshots</id>
+          <username>admin</username>
+          <password>P)P)1qaz</password>
+       </server>
+    </servers>
+    </settings>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: maven-settings-config-map
+  namespace: springweb
