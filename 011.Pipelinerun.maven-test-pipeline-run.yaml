@@ -1,0 +1,43 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: maven-springweb-
+  namespace: springweb
+spec:
+  serviceAccountName: tekton-springweb-sa
+  pipelineRef:
+    name: maven-test-pipeline
+  params:
+    - name: buildRevision
+      value: '64e16b46f25f81f28db774592e741005d5fe06c7'
+    - name: appGitUrl
+      value: 'git@github.com:conceptit/springdemo.git'
+    - name: configGitUrl
+      value: 'git@github.com:conceptit/springdemo-config.git'
+    - name: imageUrl
+      value: 'andrzejpioro/my-hcl-poc'
+    - name: imageTag
+      value: '64e16b46f25f81f28db774592e741005d5fe06c7'
+    - name: pathToContext
+      value: app-git-repo
+    - name: DOCKER_REGISTRY_SERVER
+      value: docker.io
+
+  workspaces:
+  - name: app-source
+    emptyDir: {}
+  - name: config-source
+    emptyDir: {}
+  - name: maven-settings
+    emptyDir: {}
+  - name: shared-workspace
+    persistentVolumeClaim:
+      claimName: maven-source-pvc2
+  - name: maven-settings-cm
+    configMap:
+      name: maven-settings-config-map
+  - name: docker-repo
+    emptyDir: {}
+  - name: docker-secret
+    secret:
+      secretName: docker-basic-user-pass

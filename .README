@@ -1,0 +1,13 @@
+kubectl apply -n springweb -f 001.NameSpace.springweb.yaml
+kubectl apply -n springweb -f 002.Secret.git-ssh-secret.yaml
+kubectl apply -n springweb -f 003.Secret.docker-basic-user-pass.yaml
+./004.ConfigMap.maven-settings-config-map.sh
+kubectl apply -n springweb 004.ConfigMap.maven-settings.yaml
+kubectl apply -n springweb -f 004.ConfigMap.maven-settings.yaml
+kubectl apply -n springweb -f 005.ServiceAccount.tekton-springweb-sa.yaml
+kubectl apply -n springweb -f 006.PersistentVolumeClaim.maven-source-pvc.yaml
+kubectl apply -n springweb -f 007.git-clone-0.5.yaml
+kubectl apply -n springweb -f 008.maven-0.02.yaml
+kubectl apply -n springweb -f 009.kaniko-0.5-ap.yaml
+kubectl apply -n springweb -f 010.Pipeline.maven-test-pipeline.yaml
+kubectl create -f 011.Pipelinerun.maven-test-pipeline-run.yaml
